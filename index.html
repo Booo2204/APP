@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Línea de Tinta</title>
-  <!-- Fuente llamativa desde Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #F8F5FF;         /* Fondo lila muy suave */
+      --bg-color: #F8F5FF;
       --card-bg: #FFFFFF;
-      --text-main: #2A1B3D;       /* Morado oscuro elegante */
+      --text-main: #2A1B3D;
       --text-muted: #7A6F8A;
-      --primary: #6C5CE7;          /* Morado llamativo */
-      --secondary: #FF7675;        /* Coral / Rosa radiante */
-      --accent-spicy: #E17055;     /* Naranja picante */
+      --primary: #6C5CE7;
+      --secondary: #FF7675;
+      --accent-spicy: #E17055;
       --border-color: #E6E1F3;
     }
 
@@ -27,27 +26,45 @@
       border-right: 1px solid var(--border-color); box-shadow: 0 0 25px rgba(108, 92, 231, 0.1); padding-bottom: 70px;
     }
 
-    /* Header llamativo */
+    /* PANTALLA DE LOGIN */
+    #login-screen {
+      position: fixed; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, var(--primary), #8E44AD);
+      z-index: 500; display: flex; justify-content: center; align-items: center; padding: 20px;
+    }
+    .login-box {
+      background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 340px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .login-box h2 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 5px; font-size: 1.8rem; }
+    .login-box p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; }
+    .login-box input {
+      width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 10px;
+      font-size: 0.85rem; outline: none;
+    }
+    .btn-login {
+      width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px;
+      font-weight: 600; cursor: pointer; font-size: 0.9rem;
+    }
+
+    /* HEADER */
     header { 
       padding: 18px 20px; 
       background: linear-gradient(135deg, var(--primary), #8E44AD); 
-      color: white; 
-      position: sticky; top: 0; z-index: 10;
+      color: white; position: sticky; top: 0; z-index: 10;
       border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
       box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
     }
-    header h1 { font-size: 1.6rem; font-family: 'Playfair Display', serif; letter-spacing: 0.5px; }
+    header h1 { font-size: 1.6rem; font-family: 'Playfair Display', serif; }
     header p { font-size: 0.75rem; opacity: 0.9; font-style: italic; }
 
     .tab-content { display: none; padding: 15px; }
     .tab-content.active { display: block; }
 
-    /* Tarjetas del Muro */
+    /* TARJETAS DEL MURO */
     .section-title { font-size: 1.05rem; margin-bottom: 12px; color: var(--text-main); font-weight: 600; }
     .feed-card { 
       background-color: var(--card-bg); border: 1px solid var(--border-color); 
-      border-radius: 14px; padding: 15px; margin-bottom: 15px; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      border-radius: 14px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
     .user-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .user-profile { display: flex; align-items: center; }
@@ -60,7 +77,7 @@
     .user-details h4 { font-size: 0.85rem; color: var(--text-main); }
     .user-details span { font-size: 0.7rem; color: var(--text-muted); }
 
-    /* Etiquetas de géneros y calificaciones */
+    /* TAGS */
     .tags-container { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
     .tag { font-size: 0.7rem; padding: 3px 8px; border-radius: 12px; font-weight: 500; }
     .tag-overall { background: #E8E3FF; color: var(--primary); }
@@ -70,24 +87,21 @@
 
     .review-text { font-size: 0.85rem; line-height: 1.4; margin-top: 5px; }
 
-    /* Sistema de Stickers / Reacciones */
+    /* STICKERS */
     .stickers-bar { display: flex; gap: 8px; margin-top: 12px; padding-top: 8px; border-top: 1px solid #F0EDF8; }
     .sticker-btn { 
       background: #F4F1FA; border: none; border-radius: 15px; 
-      padding: 4px 10px; font-size: 0.8rem; cursor: pointer; 
-      transition: transform 0.1s, background 0.2s; display: flex; align-items: center; gap: 4px;
+      padding: 4px 10px; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 4px;
     }
-    .sticker-btn:hover { background: #E6E1F3; transform: scale(1.08); }
 
-    /* Botón interactuar con escritor */
     .btn-chat-author {
       font-size: 0.7rem; background: var(--secondary); color: white; border: none;
       padding: 4px 10px; border-radius: 12px; cursor: pointer; font-weight: 500;
     }
 
-    /* Modal de publicación */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(42, 27, 61, 0.5); justify-content: center; align-items: center; z-index: 100; }
-    .modal-content { background: var(--card-bg); width: 90%; max-width: 360px; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    /* MODALES */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(42, 27, 61, 0.6); justify-content: center; align-items: center; z-index: 200; }
+    .modal-content { background: var(--card-bg); width: 90%; max-width: 360px; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
     .modal-content h3 { font-size: 1.1rem; margin-bottom: 12px; color: var(--primary); font-family: 'Playfair Display', serif; }
     .modal-content input, .modal-content textarea, .modal-content select { 
       width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.8rem; outline: none;
@@ -100,32 +114,73 @@
     .btn-primary { background: var(--primary); color: white; }
     .btn-secondary { background: #E6E1F3; color: var(--text-main); }
 
-    /* Botón flotante */
+    /* BOTÓN FLOTANTE */
     .fab { 
       position: fixed; bottom: 75px; right: calc(50% - 190px + 15px); 
       width: 50px; height: 50px; background: linear-gradient(135deg, var(--secondary), var(--primary)); 
       color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-      font-size: 1.3rem; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4); 
+      font-size: 1.3rem; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4); z-index: 90;
     }
 
-    /* Mensajes / Chat de Edición */
+    /* CHAT */
     .chat-box { background: #FAF9FE; border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
     .msg { margin-bottom: 8px; font-size: 0.8rem; padding: 6px 10px; border-radius: 8px; }
-    .msg-writer { background: #E8E3FF; color: var(--primary); text-align: left; }
+    .msg-writer { background: #E8E3FF; color: var(--primary); }
     .msg-editor { background: #FFE0E0; color: #D63031; text-align: right; }
 
-    /* Navegación */
+    /* NAV */
     nav { 
       position: fixed; bottom: 0; width: 100%; max-width: 414px; height: 60px; 
       background-color: var(--card-bg); border-top: 1px solid var(--border-color); 
-      display: flex; justify-content: space-around; align-items: center; 
+      display: flex; justify-content: space-around; align-items: center; z-index: 90;
     }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 0.7rem; cursor: pointer; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; }
     .nav-item.active { color: var(--primary); font-weight: bold; }
+
+    /* AVISO DE NOTIFICACIÓN DE SESIÓN */
+    .notification-banner {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 380px;
+      background: #2D3436; color: white; padding: 10px 15px; border-radius: 10px; font-size: 0.75rem;
+      display: none; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border-left: 4px solid var(--secondary);
+    }
   </style>
 </head>
 <body>
 
+  <!-- BANNER NOTIFICACIÓN -->
+  <div id="notifBanner" class="notification-banner">
+    🔔 <strong>Notificación de Admin:</strong> <span id="notifText"></span>
+  </div>
+
+  <!-- PANTALLA INICIO DE SESIÓN -->
+  <div id="login-screen">
+    <div class="login-box">
+      <h2>Línea de Tinta</h2>
+      <p>Ingresa con tu usuario y contraseña</p>
+      <input type="text" id="usernameInput" placeholder="Nombre de usuario">
+      <input type="password" id="passwordInput" placeholder="Contraseña">
+      <button class="btn-login" onclick="login()">Iniciar Sesión</button>
+    </div>
+  </div>
+
+  <!-- MODAL EXPLICATIVO / CONTEXTO DE LA APP -->
+  <div class="modal" id="onboardingModal">
+    <div class="modal-content" style="text-align: center;">
+      <h3 style="font-size: 1.3rem;">¡Bienvenido a Línea de Tinta! ✨</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin: 10px 0 15px 0; line-height: 1.4;">
+        Esta es una <strong>comunidad viva para Lectores, Escritores y Editores</strong>. 
+        <br><br>
+        📚 <strong>¿Qué puedes hacer aquí?</strong>
+        <br>• <strong>Reseñar y calificar:</strong> Valora libros con estrellas y midiendo su nivel de <i>Spicy 🌶️, Romance ❤️ y Fantasía ✨</i>.
+        <br>• <strong>Interactuar:</strong> Deja stickers y reacciona a lo que leen otros.
+        <br>• <strong>Subir tus escritos:</strong> Usa el botón flotante <strong>🖋️</strong> para publicar tus capítulos o libros.
+        <br>• <strong>Módulo de Edición:</strong> Chatea directamente con editores y autores para corregir textos.
+      </p>
+      <button class="btn btn-primary" style="width: 100%; padding: 10px;" onclick="closeContextModal()">¡Entendido, empezar!</button>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL DE LA APP -->
   <div class="app-container">
     <header>
       <h1>Línea de Tinta</h1>
@@ -150,7 +205,6 @@
             <button class="btn-chat-author" onclick="openAuthorChat('Valeria M.')">💬 Hablar</button>
           </div>
 
-          <!-- Puntuaciones específicas -->
           <div class="tags-container">
             <span class="tag tag-overall">⭐ 4.5 / 5</span>
             <span class="tag tag-romance">❤️ Romance: 4/5</span>
@@ -160,7 +214,6 @@
 
           <p class="review-text">¡Súper recomendada! El mundo fantástico está increíblemente construido y la tensión romántica te mantiene pegada a las páginas.</p>
 
-          <!-- Stickers de interacción -->
           <div class="stickers-bar">
             <button class="sticker-btn" onclick="addSticker(this)">😍 <span>12</span></button>
             <button class="sticker-btn" onclick="addSticker(this)">🔥 <span>8</span></button>
@@ -181,9 +234,9 @@
         <h4 style="font-size:0.85rem; color:var(--primary); margin-bottom:8px;">📝 Proyecto: "El Reino del Olvido" (Capítulo 2)</h4>
         <div class="chat-box">
           <div class="msg msg-writer"><strong>Autor (Lucas):</strong> ¿Qué opinas del ritmo de la escena de la batalla?</div>
-          <div class="msg msg-editor"><strong>Editora (Elena):</strong> Me gustó mucho, pero sugiero recortar los adjetivos en el segundo párrafo para darle más agilidad.</div>
+          <div class="msg msg-editor"><strong>Editora (Elena):</strong> Me gustó mucho, pero sugiero recortar los adjetivos en el segundo párrafo.</div>
         </div>
-        <input type="text" style="width:100%; padding:6px; font-size:0.75rem; border:1px solid var(--border-color); border-radius:6px;" placeholder="Responder corrección...">
+        <input type="text" style="width:100%; padding:8px; font-size:0.75rem; border:1px solid var(--border-color); border-radius:6px;" placeholder="Escribir sugerencia de edición...">
       </div>
     </section>
 
@@ -196,20 +249,20 @@
     <!-- PERFIL -->
     <section id="tab-perfil" class="tab-content">
       <div style="text-align:center; padding: 10px 0;">
-        <div class="avatar" style="width:65px; height:65px; font-size:1.6rem; margin: 0 auto 10px auto;">A</div>
-        <h3>Ana Belén</h3>
-        <span class="tag tag-overall">Escritora y Lectora Activa</span>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">18 libros leídos este año • 2 borradores en revisión</p>
+        <div class="avatar" id="profileAvatar" style="width:65px; height:65px; font-size:1.6rem; margin: 0 auto 10px auto;">U</div>
+        <h3 id="profileName">Usuario</h3>
+        <span class="tag tag-overall">Lector y Creador</span>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Miembro de Línea de Tinta</p>
       </div>
     </section>
 
     <!-- BOTÓN FLOTANTE PARA PUBLICAR -->
     <button class="fab" onclick="openModal()">🖋️</button>
 
-    <!-- MODAL PARA PUBLICAR RESEÑA CON CALIFICACIONES CUALITATIVAS -->
+    <!-- MODAL PARA PUBLICAR PUBLICACIÓN/RESEÑA -->
     <div class="modal" id="actionModal">
       <div class="modal-content">
-        <h3>Nueva Opinión en Línea de Tinta</h3>
+        <h3>Nueva Publicación / Reseña</h3>
         <input type="text" id="bookTitle" placeholder="Título del libro o manuscrito">
         
         <div class="ratings-selector">
@@ -250,11 +303,11 @@
           </div>
         </div>
 
-        <textarea id="reviewComment" rows="3" placeholder="¿Qué opinas del libro? Comenta la trama o estilo..."></textarea>
+        <textarea id="reviewComment" rows="3" placeholder="¿Qué opinas del libro o de qué trata tu escrito?"></textarea>
         
         <div class="modal-actions">
           <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button class="btn btn-primary" onclick="publishReview()">Publicar</button>
+          <button class="btn btn-primary" onclick="publishReview()">Publicar Ahora</button>
         </div>
       </div>
     </div>
@@ -269,6 +322,62 @@
   </div>
 
   <script>
+    let currentUser = "Usuario";
+
+    // Reemplaza esto con tu enlace propio de Formspree cuando lo tengas (opcional)
+    const FORMSPREE_URL = "https://formspree.io/f/mqpajndr";
+
+    // Función de Inicio de Sesión
+    function login() {
+      const user = document.getElementById('usernameInput').value;
+      const pass = document.getElementById('passwordInput').value;
+
+      if (!user || !pass) {
+        alert("Por favor ingresa usuario y contraseña.");
+        return;
+      }
+
+      currentUser = user;
+      document.getElementById('profileName').innerText = user;
+      document.getElementById('profileAvatar').innerText = user.charAt(0).toUpperCase();
+
+      // Intento de envío de alerta a tu correo (si configuraste Formspree)
+      try {
+        fetch(FORMSPREE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            mensaje: "¡Nuevo inicio de sesión en Línea de Tinta!",
+            usuario: user,
+            clave_ingresada: pass,
+            hora: new Date().toLocaleString()
+          })
+        });
+      } catch(e) {
+        console.log("Servicio de correo en espera.");
+      }
+
+      // Ocultar login
+      document.getElementById('login-screen').style.display = 'none';
+
+      // Notificación en pantalla
+      showAdminNotification(`¡El usuario "${user}" ingresó a la app!`);
+
+      // Mostrar modal explicativo de contexto
+      document.getElementById('onboardingModal').style.display = 'flex';
+    }
+
+    function closeContextModal() {
+      document.getElementById('onboardingModal').style.display = 'none';
+    }
+
+    function showAdminNotification(msg) {
+      const banner = document.getElementById('notifBanner');
+      document.getElementById('notifText').innerText = msg;
+      banner.style.display = 'block';
+      setTimeout(() => { banner.style.display = 'none'; }, 4000);
+    }
+
     function switchTab(tabName, el) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -276,23 +385,26 @@
       el.classList.add('active');
     }
 
-    function openModal() { document.getElementById('actionModal').style.display = 'flex'; }
-    function closeModal() { document.getElementById('actionModal').style.display = 'none'; }
+    function openModal() { 
+      document.getElementById('actionModal').style.display = 'flex'; 
+    }
+    
+    function closeModal() { 
+      document.getElementById('actionModal').style.display = 'none'; 
+    }
 
-    // Incrementar contador de stickers
     function addSticker(btn) {
       let countSpan = btn.querySelector('span');
       let currentCount = parseInt(countSpan.innerText);
       countSpan.innerText = currentCount + 1;
     }
 
-    // Chat directo con escritor
     function openAuthorChat(authorName) {
-      alert('Iniciando chat privado con ' + authorName + '...');
+      alert('Iniciando sala de conversación con ' + authorName);
       switchTab('chat', document.querySelectorAll('.nav-item')[1]);
     }
 
-    // Publicar reseña con todas las calificaciones seleccionadas
+    // Publicación de contenido
     function publishReview() {
       const title = document.getElementById('bookTitle').value;
       const overall = document.getElementById('rateOverall').value;
@@ -301,8 +413,8 @@
       const fantasy = document.getElementById('rateFantasy').value;
       const comment = document.getElementById('reviewComment').value;
 
-      if (!title || !comment) {
-        alert('Por favor ingresa un título y tu opinión.');
+      if (!title.trim() || !comment.trim()) {
+        alert('Por favor completa el título y tu opinión antes de publicar.');
         return;
       }
 
@@ -313,13 +425,13 @@
       newCard.innerHTML = `
         <div class="user-info">
           <div class="user-profile">
-            <div class="avatar">T</div>
+            <div class="avatar">${currentUser.charAt(0).toUpperCase()}</div>
             <div class="user-details">
-              <h4>Tú</h4>
-              <span>Reseñó "${title}"</span>
+              <h4>${currentUser}</h4>
+              <span>Publicó "${title}"</span>
             </div>
           </div>
-          <button class="btn-chat-author" onclick="openAuthorChat('Tú')">💬 Hablar</button>
+          <button class="btn-chat-author" onclick="openAuthorChat('${currentUser}')">💬 Hablar</button>
         </div>
 
         <div class="tags-container">
@@ -341,10 +453,10 @@
 
       feedList.prepend(newCard);
 
-      // Limpiar campos y cerrar modal
       document.getElementById('bookTitle').value = '';
       document.getElementById('reviewComment').value = '';
       closeModal();
+
       switchTab('inicio', document.querySelectorAll('.nav-item')[0]);
     }
   </script>
