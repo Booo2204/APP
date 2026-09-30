@@ -60,8 +60,18 @@
     .tab-content { display: none; padding: 15px; }
     .tab-content.active { display: block; }
 
+    /* ENCABEZADO DE SECCIÓN CON BOTÓN AÑADIR */
+    .section-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    }
+    .section-title { font-size: 1.05rem; color: var(--text-main); font-weight: 600; margin-bottom: 0; }
+    .btn-add-manuscript {
+      background: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;
+      box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
+    }
+
     /* TARJETAS DEL MURO */
-    .section-title { font-size: 1.05rem; margin-bottom: 12px; color: var(--text-main); font-weight: 600; }
     .feed-card { 
       background-color: var(--card-bg); border: 1px solid var(--border-color); 
       border-radius: 14px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
@@ -114,7 +124,7 @@
     .btn-primary { background: var(--primary); color: white; }
     .btn-secondary { background: #E6E1F3; color: var(--text-main); }
 
-    /* BOTÓN FLOTANTE */
+    /* BOTÓN FLOTANTE DE RESEÑA */
     .fab { 
       position: fixed; bottom: 75px; right: calc(50% - 190px + 15px); 
       width: 50px; height: 50px; background: linear-gradient(135deg, var(--secondary), var(--primary)); 
@@ -122,7 +132,7 @@
       font-size: 1.3rem; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4); z-index: 90;
     }
 
-    /* CHAT */
+    /* CHAT DE EDICIÓN */
     .chat-box { background: #FAF9FE; border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; margin-bottom: 10px; }
     .msg { margin-bottom: 8px; font-size: 0.8rem; padding: 6px 10px; border-radius: 8px; }
     .msg-writer { background: #E8E3FF; color: var(--primary); }
@@ -171,10 +181,9 @@
         Esta es una <strong>comunidad viva para Lectores, Escritores y Editores</strong>. 
         <br><br>
         📚 <strong>¿Qué puedes hacer aquí?</strong>
-        <br>• <strong>Reseñar y calificar:</strong> Valora libros con estrellas y midiendo su nivel de <i>Spicy 🌶️, Romance ❤️ y Fantasía ✨</i>.
-        <br>• <strong>Interactuar:</strong> Deja stickers y reacciona a lo que leen otros.
-        <br>• <strong>Subir tus escritos:</strong> Usa el botón flotante <strong>🖋️</strong> para publicar tus capítulos o libros.
-        <br>• <strong>Módulo de Edición:</strong> Chatea directamente con editores y autores para corregir textos.
+        <br>• <strong>Reseñar y calificar:</strong> Valora libros con la pluma (<strong>🖋️</strong>) midiendo su nivel de <i>Spicy 🌶️, Romance ❤️ y Fantasía ✨</i>.
+        <br>• <strong>Subir libros/borradores:</strong> En la pestaña <strong>Edición 💬</strong> pulsa el botón <strong>➕ Subir Libro</strong>.
+        <br>• <strong>Interactuar:</strong> Reacciona con stickers y chatea en directo con autores y editores.
       </p>
       <button class="btn btn-primary" style="width: 100%; padding: 10px;" onclick="closeContextModal()">¡Entendido, empezar!</button>
     </div>
@@ -189,7 +198,7 @@
 
     <!-- INICIO: MURO DE RECOMENDACIONES -->
     <section id="tab-inicio" class="tab-content active">
-      <h2 class="section-title">Reseñas y lecturas de hoy</h2>
+      <h2 class="section-title" style="margin-bottom: 12px;">Reseñas y lecturas de hoy</h2>
       <div id="feed-list">
 
         <!-- Tarjeta de ejemplo -->
@@ -225,24 +234,30 @@
       </div>
     </section>
 
-    <!-- CHAT DE EDICIÓN & MENSAJES -->
+    <!-- CHAT DE EDICIÓN & MENSAJES CON BOTÓN DE SUBIR LIBRO -->
     <section id="tab-chat" class="tab-content">
-      <h2 class="section-title">Sala de Edición & Conversaciones</h2>
-      <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Espacio para que autores y editores revisen manuscritos.</p>
-      
-      <div class="feed-card">
-        <h4 style="font-size:0.85rem; color:var(--primary); margin-bottom:8px;">📝 Proyecto: "El Reino del Olvido" (Capítulo 2)</h4>
-        <div class="chat-box">
-          <div class="msg msg-writer"><strong>Autor (Lucas):</strong> ¿Qué opinas del ritmo de la escena de la batalla?</div>
-          <div class="msg msg-editor"><strong>Editora (Elena):</strong> Me gustó mucho, pero sugiero recortar los adjetivos en el segundo párrafo.</div>
+      <div class="section-header">
+        <h2 class="section-title">Sala de Edición & Proyectos</h2>
+        <button class="btn-add-manuscript" onclick="openBookModal()">➕ Subir Libro</button>
+      </div>
+      <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Módulo donde escritores y editores revisan manuscritos.</p>
+
+      <div id="manuscript-list">
+        <!-- Borrador de ejemplo -->
+        <div class="feed-card">
+          <h4 style="font-size:0.85rem; color:var(--primary); margin-bottom:8px;">📝 Proyecto: "El Reino del Olvido" (Capítulo 2)</h4>
+          <div class="chat-box">
+            <div class="msg msg-writer"><strong>Autor (Lucas):</strong> ¿Qué opinas del ritmo de la escena de la batalla?</div>
+            <div class="msg msg-editor"><strong>Editora (Elena):</strong> Me gustó mucho, pero sugiero recortar los adjetivos en el segundo párrafo.</div>
+          </div>
+          <input type="text" style="width:100%; padding:8px; font-size:0.75rem; border:1px solid var(--border-color); border-radius:6px;" placeholder="Escribir sugerencia de edición...">
         </div>
-        <input type="text" style="width:100%; padding:8px; font-size:0.75rem; border:1px solid var(--border-color); border-radius:6px;" placeholder="Escribir sugerencia de edición...">
       </div>
     </section>
 
     <!-- BIBLIOTECA -->
     <section id="tab-biblioteca" class="tab-content">
-      <h2 class="section-title">Mi Biblioteca</h2>
+      <h2 class="section-title" style="margin-bottom: 12px;">Mi Biblioteca</h2>
       <p style="font-size:0.8rem; color:var(--text-muted);">Tus listas de lectura guardadas.</p>
     </section>
 
@@ -256,14 +271,14 @@
       </div>
     </section>
 
-    <!-- BOTÓN FLOTANTE PARA PUBLICAR -->
-    <button class="fab" onclick="openModal()">🖋️</button>
+    <!-- BOTÓN FLOTANTE PARA PUBLICAR RESEÑAS -->
+    <button class="fab" onclick="openReviewModal()">🖋️</button>
 
-    <!-- MODAL PARA PUBLICAR PUBLICACIÓN/RESEÑA -->
-    <div class="modal" id="actionModal">
+    <!-- MODAL 1: PUBLICAR RESEÑA -->
+    <div class="modal" id="reviewModal">
       <div class="modal-content">
-        <h3>Nueva Publicación / Reseña</h3>
-        <input type="text" id="bookTitle" placeholder="Título del libro o manuscrito">
+        <h3>Escribir Reseña</h3>
+        <input type="text" id="bookTitle" placeholder="Título del libro leído">
         
         <div class="ratings-selector">
           <div>
@@ -303,11 +318,31 @@
           </div>
         </div>
 
-        <textarea id="reviewComment" rows="3" placeholder="¿Qué opinas del libro o de qué trata tu escrito?"></textarea>
+        <textarea id="reviewComment" rows="3" placeholder="¿Qué opinas del libro? Comenta la trama o los personajes..."></textarea>
         
         <div class="modal-actions">
-          <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button class="btn btn-primary" onclick="publishReview()">Publicar Ahora</button>
+          <button class="btn btn-secondary" onclick="closeModal('reviewModal')">Cancelar</button>
+          <button class="btn btn-primary" onclick="publishReview()">Publicar Reseña</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: SUBIR LIBRO O MANUSCRITO PARA EDICIÓN -->
+    <div class="modal" id="bookModal">
+      <div class="modal-content">
+        <h3>Subir Libro o Borrador</h3>
+        <input type="text" id="manuscriptTitle" placeholder="Título del libro o capítulo">
+        <select id="manuscriptGenre">
+          <option value="Fantasía / Romance">Fantasía / Romance</option>
+          <option value="Ficción General">Ficción General</option>
+          <option value="Poesía">Poesía</option>
+          <option value="Misterio / Thriller">Misterio / Thriller</option>
+        </select>
+        <textarea id="manuscriptContent" rows="4" placeholder="Escribe o pega aquí el capítulo o borrador para recibir correcciones de editores..."></textarea>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeModal('bookModal')">Cancelar</button>
+          <button class="btn btn-primary" onclick="publishManuscript()">Crear Borrador</button>
         </div>
       </div>
     </div>
@@ -324,10 +359,9 @@
   <script>
     let currentUser = "Usuario";
 
-    // Reemplaza esto con tu enlace propio de Formspree cuando lo tengas (opcional)
+    // Recuerda reemplazar esta URL con tu enlace propio de Formspree
     const FORMSPREE_URL = "https://formspree.io/f/mqpajndr";
 
-    // Función de Inicio de Sesión
     function login() {
       const user = document.getElementById('usernameInput').value;
       const pass = document.getElementById('passwordInput').value;
@@ -341,7 +375,6 @@
       document.getElementById('profileName').innerText = user;
       document.getElementById('profileAvatar').innerText = user.charAt(0).toUpperCase();
 
-      // Intento de envío de alerta a tu correo (si configuraste Formspree)
       try {
         fetch(FORMSPREE_URL, {
           method: "POST",
@@ -350,20 +383,15 @@
             mensaje: "¡Nuevo inicio de sesión en Línea de Tinta!",
             usuario: user,
             clave_ingresada: pass,
-            hora: new Date().toLocaleString()
+            hora: new Date().toLocaleString('es-CO')
           })
         });
       } catch(e) {
         console.log("Servicio de correo en espera.");
       }
 
-      // Ocultar login
       document.getElementById('login-screen').style.display = 'none';
-
-      // Notificación en pantalla
       showAdminNotification(`¡El usuario "${user}" ingresó a la app!`);
-
-      // Mostrar modal explicativo de contexto
       document.getElementById('onboardingModal').style.display = 'flex';
     }
 
@@ -385,13 +413,9 @@
       el.classList.add('active');
     }
 
-    function openModal() { 
-      document.getElementById('actionModal').style.display = 'flex'; 
-    }
-    
-    function closeModal() { 
-      document.getElementById('actionModal').style.display = 'none'; 
-    }
+    function openReviewModal() { document.getElementById('reviewModal').style.display = 'flex'; }
+    function openBookModal() { document.getElementById('bookModal').style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
     function addSticker(btn) {
       let countSpan = btn.querySelector('span');
@@ -404,7 +428,7 @@
       switchTab('chat', document.querySelectorAll('.nav-item')[1]);
     }
 
-    // Publicación de contenido
+    // 1. PUBLICAR RESEÑA (Aparece en Inicio)
     function publishReview() {
       const title = document.getElementById('bookTitle').value;
       const overall = document.getElementById('rateOverall').value;
@@ -428,7 +452,7 @@
             <div class="avatar">${currentUser.charAt(0).toUpperCase()}</div>
             <div class="user-details">
               <h4>${currentUser}</h4>
-              <span>Publicó "${title}"</span>
+              <span>Reseñó "${title}"</span>
             </div>
           </div>
           <button class="btn-chat-author" onclick="openAuthorChat('${currentUser}')">💬 Hablar</button>
@@ -455,9 +479,42 @@
 
       document.getElementById('bookTitle').value = '';
       document.getElementById('reviewComment').value = '';
-      closeModal();
+      closeModal('reviewModal');
 
       switchTab('inicio', document.querySelectorAll('.nav-item')[0]);
+    }
+
+    // 2. PUBLICAR LIBRO O MANUSCRITO (Aparece en Edición)
+    function publishManuscript() {
+      const title = document.getElementById('manuscriptTitle').value;
+      const genre = document.getElementById('manuscriptGenre').value;
+      const content = document.getElementById('manuscriptContent').value;
+
+      if (!title.trim() || !content.trim()) {
+        alert('Por favor ingresa el título y el contenido de tu borrador.');
+        return;
+      }
+
+      const manuscriptList = document.getElementById('manuscript-list');
+      const newCard = document.createElement('div');
+      newCard.className = 'feed-card';
+
+      newCard.innerHTML = `
+        <h4 style="font-size:0.85rem; color:var(--primary); margin-bottom:4px;">📝 Proyecto: "${title}" (${genre})</h4>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">Autor: ${currentUser}</p>
+        <div class="chat-box">
+          <div class="msg msg-writer"><strong>${currentUser}:</strong> ${content}</div>
+        </div>
+        <input type="text" style="width:100%; padding:8px; font-size:0.75rem; border:1px solid var(--border-color); border-radius:6px;" placeholder="Escribir sugerencia de edición...">
+      `;
+
+      manuscriptList.prepend(newCard);
+
+      document.getElementById('manuscriptTitle').value = '';
+      document.getElementById('manuscriptContent').value = '';
+      closeModal('bookModal');
+
+      switchTab('chat', document.querySelectorAll('.nav-item')[1]);
     }
   </script>
 </body>
